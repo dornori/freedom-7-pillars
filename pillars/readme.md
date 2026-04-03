@@ -2,25 +2,25 @@
 
 The `pillars/` directory contains detailed supporting materials for each of the **7 pillars** of The FREEDOM Framework.
 
-Each pillar has its own folder with core explanations, case studies, proposals, evidence, and additional documents.
+Each pillar has its own dedicated folder with core explanations, case studies, proposals, evidence, and additional documents.
 
-### Structure
+### Pillar Folders
 
-| Pillar          | Folder                          | Focus |
-|-----------------|---------------------------------|-------|
-| **Foundation**  | [`pillars/foundation/`](https://github.com/dornori/freedom-7-pillars/tree/main/pillars/foundation) | Food, water, shelter, energy, land allocation |
-| **Resilience**  | [`pillars/resilience/`](https://github.com/dornori/freedom-7-pillars/tree/main/pillars/resilience) | Human continuity and disaster recovery |
-| **Exchange**    | [`pillars/exchange/`](https://github.com/dornori/freedom-7-pillars/tree/main/pillars/exchange) | Trade, collaboration, communication, data ownership |
-| **Equilibrium** | [`pillars/equilibrium/`](https://github.com/dornori/freedom-7-pillars/tree/main/pillars/equilibrium) | Healthcare, sanitation, physical & mental well-being |
-| **Defense**     | [`pillars/defense/`](https://github.com/dornori/freedom-7-pillars/tree/main/pillars/defense) | Safety, rule of law, right to self-defense |
-| **Ownership**   | [`pillars/ownership/`](https://github.com/dornori/freedom-7-pillars/tree/main/pillars/ownership) | Personal sovereignty and autonomy |
-| **Mobility**    | [`pillars/mobility/`](https://github.com/dornori/freedom-7-pillars/tree/main/pillars/mobility) | Freedom of movement and privacy |
+| Pillar          | Folder Name                          | Focus |
+|-----------------|--------------------------------------|-------|
+| **Foundation**  | [`1_Foundation`](https://github.com/dornori/freedom-7-pillars/tree/main/pillars/1_Foundation) | Food, water, shelter, energy, land allocation |
+| **Resilience**  | [`2_Resilience`](https://github.com/dornori/freedom-7-pillars/tree/main/pillars/2_Resilience) | Human continuity and disaster recovery |
+| **Exchange**    | [`3_Exchange`](https://github.com/dornori/freedom-7-pillars/tree/main/pillars/3_Exchange) | Trade, collaboration, communication, data ownership |
+| **Equilibrium** | [`4_Equilibrium`](https://github.com/dornori/freedom-7-pillars/tree/main/pillars/4_Equilibrium) | Healthcare, sanitation, physical & mental well-being |
+| **Defense**     | [`5_Defense`](https://github.com/dornori/freedom-7-pillars/tree/main/pillars/5_Defense) | Safety, rule of law, right to self-defense |
+| **Ownership**   | [`6_Ownership`](https://github.com/dornori/freedom-7-pillars/tree/main/pillars/6_Ownership) | Personal sovereignty and autonomy |
+| **Mobility**    | [`7_Mobility`](https://github.com/dornori/freedom-7-pillars/tree/main/pillars/7_Mobility) | Freedom of movement and privacy |
 
 ### What You'll Find Inside Each Pillar Folder
 
-- Main pillar documentation
+- Main pillar documentation and explanations
 - Case studies and real-world examples
 - Detailed proposals and implementation ideas
 - Supporting research, references, and evidence
 
-**Contribution note:** When adding new materials, place them in the appropriate pillar folder and consider updating the main `freedom-framework.odt` document if the changes are significant.
+**Tip:** When adding new materials, place them in the appropriate numbered pillar folder and consider updating the main `freedom-framework.odt` document for significant changes.
