@@ -41,9 +41,7 @@ jobs:
   - name: Create Pull Request with generated files
     uses: peter-evans/create-pull-request@v7
     with:
-      commit-message: |-
-        chore: Auto-generate .fodt from .odt
-        chore: Auto-generate .pdf from .odt
+      commit-message: "chore: Auto-generate .fodt from .odt\n\nchore: Auto-generate .pdf from .odt"
       title: "chore: Auto-generate .fodt and .pdf from latest ODT"
       body: |
         Automatically generated `.fodt` (for better diffs) and `.pdf` files 
