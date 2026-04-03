@@ -1,7 +1,11 @@
 name: Convert ODT → FODT + PDF
 
 on:
-  workflow_dispatch:   # ← Manual trigger only
+  push:
+    branches: [ main ]
+    paths:
+      - 'manifest/freedom-framework.odt'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -31,10 +35,14 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
-          git add freedom-framework.fodt
-          git commit -m "chore: Auto-generate .fodt from .odt" || echo "No changes for .fodt"
-          git push
-        continue-on-error: true
+          git add manifest/freedom-framework.fodt || true
+          
+          if ! git diff --staged --quiet; then
+            git commit -m "MACHINE READABLE - change tracking (.fodt from .odt)"
+            git push
+          else
+            echo "No changes for .fodt"
+          fi
 
   generate-pdf:
     name: Generate PDF
@@ -60,7 +68,11 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
-          git add freedom-framework.pdf
-          git commit -m "chore: Auto-generate .pdf from .odt" || echo "No changes for .pdf"
-          git push
-        continue-on-error: true
+          git add manifest/freedom-framework.pdf || true
+          
+          if ! git diff --staged --quiet; then
+            git commit -m "HUMAN READABLE: Latest Version (.pdf from .odt)"
+            git push
+          else
+            echo "No changes for .pdf"
+          fi
