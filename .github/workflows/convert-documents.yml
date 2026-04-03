@@ -31,18 +31,22 @@ jobs:
       - name: Convert to PDF + Commit
         run: |
           cd manifest
-
-          for file in *.odt; do
-            libreoffice --headless --norestore --nolockcheck \
-              -env:UserInstallation=file:///tmp/lo-profile \
-              --convert-to pdf "$file"
-          done
+          shopt -s nullglob
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add *.pdf
-          git commit -m "Human Readable: Latest Version (.pdf from .odt)" || echo "No changes"
+          for file in *.odt; do
+            base=$(basename "$file" .odt)
+
+            # convert to PDF
+            libreoffice --headless --norestore --nolockcheck \
+              -env:UserInstallation=file:///tmp/lo-profile \
+              --convert-to pdf "$file"
+
+            git add "${base}.pdf"
+            git commit -m "Human Readable: auto-generate ${base}.pdf from ${file}" || echo "No changes for ${base}.pdf"
+          done
 
           git pull --rebase
           git push
@@ -69,18 +73,22 @@ jobs:
       - name: Convert to FODT + Commit
         run: |
           cd manifest
-
-          for file in *.odt; do
-            libreoffice --headless --norestore --nolockcheck \
-              -env:UserInstallation=file:///tmp/lo-profile \
-              --convert-to fodt "$file"
-          done
+          shopt -s nullglob
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add *.fodt
-          git commit -m "Machine Readable: Latest Version (.fodt from .odt)" || echo "No changes"
+          for file in *.odt; do
+            base=$(basename "$file" .odt)
+
+            # convert to FODT
+            libreoffice --headless --norestore --nolockcheck \
+              -env:UserInstallation=file:///tmp/lo-profile \
+              --convert-to fodt "$file"
+
+            git add "${base}.fodt"
+            git commit -m "Machine Readable: auto-generate ${base}.fodt from ${file}" || echo "No changes for ${base}.fodt"
+          done
 
           git pull --rebase
           git push
