@@ -42,7 +42,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add *.pdf
-          git commit -m "chore: auto-generate .pdf from .odt" || echo "No changes"
+          git commit -m "Human Readable: Latest Version (.pdf from .odt)" || echo "No changes"
 
           git pull --rebase
           git push
@@ -80,7 +80,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add *.fodt
-          git commit -m "chore: auto-generate .fodt from .odt" || echo "No changes"
+          git commit -m "Machine Readable: Latest Version (.fodt from .odt)" || echo "No changes"
 
           git pull --rebase
           git push
