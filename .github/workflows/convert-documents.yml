@@ -9,7 +9,7 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write   # Needed to create PRs
+  pull-requests: write
 
 jobs:
   convert:
@@ -32,15 +32,24 @@ jobs:
       - name: Convert ODT to FODT and PDF
         run: |
           cd manifest
+          echo "Converting freedom-framework.odt..."
           libreoffice --headless --convert-to fodt freedom-framework.odt
           libreoffice --headless --convert-to pdf freedom-framework.odt
+          echo "Conversion done:"
+          ls -la
 
       - name: Create Pull Request with generated files
         uses: peter-evans/create-pull-request@v7
         with:
           commit-message: "chore: Auto-generate .fodt and .pdf from .odt"
-          title: "chore: Auto-generate .fodt and .pdf"
-          body: "Automatically generated .fodt and .pdf files from the latest freedom-framework.odt"
-          branch: "auto-generate-documents"
+          title: "chore: Auto-generate .fodt and .pdf from latest .odt"
+          body: |
+            Automatically generated `.fodt` and `.pdf` files from `freedom-framework.odt`.
+
+            This PR was created by the document conversion workflow.
+          branch: auto-update-documents
           delete-branch: true
           token: ${{ secrets.GITHUB_TOKEN }}
+          add-paths: |
+            manifest/freedom-framework.fodt
+            manifest/freedom-framework.pdf
