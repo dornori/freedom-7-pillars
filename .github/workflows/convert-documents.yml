@@ -1,1 +1,31 @@
+name: Convert ODT to FODT and PDF
 
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'manifest/freedom-framework.odt'
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install LibreOffice
+        run: sudo apt-get update && sudo apt-get install -y libreoffice
+
+      - name: Convert to FODT and PDF
+        run: |
+          cd manifest
+          libreoffice --headless --convert-to fodt freedom-framework.odt
+          libreoffice --headless --convert-to pdf freedom-framework.odt
+
+      - name: Commit and push generated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add manifest/freedom-framework.fodt manifest/freedom-framework.pdf
+          git commit -m "Auto-generate FODT and PDF from ODT" || echo "No changes to commit"
+          git push
