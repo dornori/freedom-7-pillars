@@ -1,18 +1,6 @@
-name: Convert ODT → FODT + PDF
-
-on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'manifest/freedom-framework.odt'
-  workflow_dispatch:
-
-permissions:
-  contents: write
-
 jobs:
-  generate-fodt:
-    name: Generate FODT
+  convert-documents:
+    name: Convert ODT to FODT and PDF
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
@@ -27,52 +15,15 @@ jobs:
             libreoffice \
             libreoffice-writer
 
-      - name: Convert to FODT + Commit
+      - name: Convert to FODT and PDF
         run: |
           cd manifest
           libreoffice --headless --convert-to fodt freedom-framework.odt
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
-          git add manifest/freedom-framework.fodt || true
-          
-          if ! git diff --staged --quiet; then
-            git commit -m "MACHINE READABLE - change tracking (.fodt from .odt)"
-            git push
-          else
-            echo "No changes for .fodt"
-          fi
-
-  generate-pdf:
-    name: Generate PDF
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install LibreOffice
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends \
-            libreoffice \
-            libreoffice-writer
-
-      - name: Convert to PDF + Commit
-        run: |
-          cd manifest
           libreoffice --headless --convert-to pdf freedom-framework.odt
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
-          git add manifest/freedom-framework.pdf || true
-          
-          if ! git diff --staged --quiet; then
-            git commit -m "HUMAN READABLE: Latest Version (.pdf from .odt)"
-            git push
-          else
-            echo "No changes for .pdf"
-          fi
+          git add manifest/freedom-framework.fodt manifest/freedom-framework.pdf
+          git commit -m "chore: Auto-generate .fodt and .pdf from .odt" || echo "No changes detected"
+          git push
