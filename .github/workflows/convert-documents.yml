@@ -22,16 +22,6 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Cache LibreOffice
-        uses: actions/cache@v4
-        with:
-          path: |
-            /var/cache/apt/archives
-            /usr/lib/libreoffice
-            /usr/share/libreoffice
-          key: ${{ runner.os }}-libreoffice-v1
-          restore-keys: ${{ runner.os }}-libreoffice-
-
       - name: Install LibreOffice
         run: |
           sudo apt-get update -qq
@@ -42,29 +32,24 @@ jobs:
       - name: Convert ODT to FODT and PDF
         run: |
           cd manifest
-          echo "🔄 Converting freedom-framework.odt ..."
-          
+          echo "Converting freedom-framework.odt..."
           libreoffice --headless --convert-to fodt freedom-framework.odt
-          libreoffice --headless --convert-to pdf  freedom-framework.odt
-          
-          echo "✅ Conversion completed:"
-          ls -la
+          libreoffice --headless --convert-to pdf freedom-framework.odt
 
       - name: Create Pull Request with generated files
         uses: peter-evans/create-pull-request@v7
         with:
-          commit-message: "chore: Auto-generate .fodt and .pdf from .odt [skip ci]"
+          commit-message: "chore: Auto-generate .fodt and .pdf from .odt"
           title: "chore: Auto-generate .fodt and .pdf"
           body: |
-            Automatically generated files from the latest `freedom-framework.odt`:
+            Automatically generated `.fodt` (for diffs) and `.pdf` from the latest `.odt`.
 
-            - `freedom-framework.fodt` → Better for Git diffs and collaboration
-            - `freedom-framework.pdf` → Clean version for readers
-
-            This PR was created by the document conversion workflow.
+            Triggered by changes to `freedom-framework.odt`.
           branch: auto-generate-documents
           delete-branch: true
           token: ${{ secrets.GITHUB_TOKEN }}
           add-paths: |
             manifest/freedom-framework.fodt
             manifest/freedom-framework.pdf
+          # Force create PR even if files are similar
+          base: main
