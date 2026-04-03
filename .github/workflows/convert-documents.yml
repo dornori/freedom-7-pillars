@@ -31,20 +31,23 @@ jobs:
           cd manifest
 
           for file in *.odt; do
-            libreoffice --headless --convert-to fodt "$file"
+            libreoffice --headless --norestore --nolockcheck \
+              -env:UserInstallation=file:///tmp/lo-profile \
+              --convert-to fodt "$file"
           done
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add *.fodt
-          git commit -m "MACHINE READABLE: Latest version .fodt from .odt" || echo "No changes"
+          git commit -m "chore: auto-generate .fodt from .odt" || echo "No changes"
           git push
         continue-on-error: true
 
   generate-pdf:
     name: Generate PDF
     runs-on: ubuntu-22.04
+    needs: generate-fodt
 
     steps:
       - name: Checkout code
@@ -52,25 +55,29 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install LibreOffice
+      - name: Install LibreOffice + Fonts
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends \
             libreoffice \
-            libreoffice-writer
+            libreoffice-writer \
+            fonts-dejavu \
+            fonts-liberation
 
       - name: Convert to PDF + Commit
         run: |
           cd manifest
 
           for file in *.odt; do
-            libreoffice --headless --convert-to pdf "$file"
+            libreoffice --headless --norestore --nolockcheck \
+              -env:UserInstallation=file:///tmp/lo-profile \
+              --convert-to pdf "$file"
           done
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add *.pdf
-          git commit -m "HUMAN READABLE: Latest version .pdf from .odt" || echo "No changes"
+          git commit -m "chore: auto-generate .pdf from .odt" || echo "No changes"
           git push
         continue-on-error: true
