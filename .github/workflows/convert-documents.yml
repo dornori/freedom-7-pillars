@@ -1,64 +1,66 @@
 name: Convert ODT → FODT + PDF
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'manifest/freedom-framework.odt'
-  workflow_dispatch:
+  workflow_dispatch:   # ← Manual trigger only
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
-  convert:
+  generate-fodt:
+    name: Generate FODT
     runs-on: ubuntu-22.04
-
     steps:
-  - name: Checkout code
-    uses: actions/checkout@v4
-    with:
-      fetch-depth: 0
-      token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-  - name: Install LibreOffice
-    run: |
-      sudo apt-get update -qq
-      sudo apt-get install -y --no-install-recommends \
-        libreoffice \
-        libreoffice-writer
+      - name: Install LibreOffice
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            libreoffice \
+            libreoffice-writer
 
-  - name: Convert ODT to FODT and PDF
-    run: |
-      cd manifest
-      echo "Converting freedom-framework.odt..."
-      libreoffice --headless --convert-to fodt freedom-framework.odt
-      libreoffice --headless --convert-to pdf freedom-framework.odt
-      echo "Conversion completed:"
-      ls -la
+      - name: Convert to FODT + Commit
+        run: |
+          cd manifest
+          libreoffice --headless --convert-to fodt freedom-framework.odt
 
-  - name: Commit FODT file
-    run: |
-      git config user.name "github-actions[bot]"
-      git config user.email "github-actions[bot]@users.noreply.github.com"
-      git add manifest/freedom-framework.fodt
-      git commit -m "chore: Auto-generate .fodt from .odt" || echo "No changes to commit"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          git add manifest/freedom-framework.fodt
+          git commit -m "chore: Auto-generate .fodt from .odt" || echo "No changes for .fodt"
+          git push
+        continue-on-error: true
 
-  - name: Commit PDF file
-    run: |
-      git add manifest/freedom-framework.pdf
-      git commit -m "chore: Auto-generate .pdf from .odt" || echo "No changes to commit"
+  generate-pdf:
+    name: Generate PDF
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-  - name: Create Pull Request
-    uses: peter-evans/create-pull-request@v7
-    with:
-      title: "chore: Auto-generate .fodt and .pdf from latest ODT"
-      body: |
-        Automatically generated `.fodt` (for better diffs) and `.pdf` files 
-        from the latest `freedom-framework.odt`.
+      - name: Install LibreOffice
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            libreoffice \
+            libreoffice-writer
 
-        This PR was created by the document conversion workflow.
-      branch: auto-generate-documents
-      delete-branch: true
-      token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Convert to PDF + Commit
+        run: |
+          cd manifest
+          libreoffice --headless --convert-to pdf freedom-framework.odt
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          git add manifest/freedom-framework.pdf
+          git commit -m "chore: Auto-generate .pdf from .odt" || echo "No changes for .pdf"
+          git push
+        continue-on-error: true
