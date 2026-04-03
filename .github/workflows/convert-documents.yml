@@ -9,16 +9,15 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
-  # Job 1: Generate FODT (optimized for Git diffs and collaboration)
+  # Job 1: Generate FODT
   generate-fodt:
-    name: Generate FODT
+    name: Generate FODT (for diffs)
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -36,27 +35,29 @@ jobs:
           cd manifest
           libreoffice --headless --convert-to fodt freedom-framework.odt
 
-      - name: Create PR for FODT
-        uses: peter-evans/create-pull-request@v7
-        with:
-          commit-message: "MACHINE READABLE: latest fodt (for Git diffs)"
-          title: "MACHINE READABLE: latest fodt (for Git diffs)"
-          body: |
-            Automatically generated `.fodt` file from `freedom-framework.odt`.
+      - name: Commit FODT
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          git pull --rebase origin main || echo "No remote changes"
+          
+          git add manifest/freedom-framework.fodt || true
+          
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: Auto-generate .fodt from .odt"
+            git push
+          else
+            echo "No changes to commit for .fodt"
+          fi
 
-            Purpose: Better Git diffs and easier collaboration/review.
-          branch: auto-generate-fodt
-          delete-branch: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-          add-paths: manifest/freedom-framework.fodt
-
-  # Job 2: Generate PDF (for reading and distribution)
+  # Job 2: Generate PDF
   generate-pdf:
-    name: Generate PDF
+    name: Generate PDF (for reading)
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -74,16 +75,18 @@ jobs:
           cd manifest
           libreoffice --headless --convert-to pdf freedom-framework.odt
 
-      - name: Create PR for PDF
-        uses: peter-evans/create-pull-request@v7
-        with:
-          commit-message: "chore: Auto-generate .pdf from .odt"
-          title: "HUMAN READABLE: latest .pdf version (for distribution)"
-          body: |
-            Automatically generated clean `.pdf` version from `freedom-framework.odt`.
-
-            Purpose: Easy reading and sharing with others.
-          branch: auto-generate-pdf
-          delete-branch: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-          add-paths: manifest/freedom-framework.pdf
+      - name: Commit PDF
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          git pull --rebase origin main || echo "No remote changes"
+          
+          git add manifest/freedom-framework.pdf || true
+          
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: Auto-generate .pdf from .odt"
+            git push
+          else
+            echo "No changes to commit for .pdf"
+          fi
