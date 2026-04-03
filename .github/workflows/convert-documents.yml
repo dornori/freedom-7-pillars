@@ -1,7 +1,18 @@
+name: Convert ODT → FODT + PDF
+
+on:
+  push:
+    paths:
+      - 'manifest/*.odt'   # triggers when any .odt file is added/changed
+
+permissions:
+  contents: write
+
 jobs:
-  convert-documents:
-    name: Convert ODT to FODT and PDF
+  generate:
+    name: Generate FODT + PDF
     runs-on: ubuntu-22.04
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -15,15 +26,18 @@ jobs:
             libreoffice \
             libreoffice-writer
 
-      - name: Convert to FODT and PDF
+      - name: Convert to FODT + PDF + Commit
         run: |
           cd manifest
-          libreoffice --headless --convert-to fodt freedom-framework.odt
-          libreoffice --headless --convert-to pdf freedom-framework.odt
+
+          for file in *.odt; do
+            libreoffice --headless --convert-to fodt "$file"
+            libreoffice --headless --convert-to pdf "$file"
+          done
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
-          git add manifest/freedom-framework.fodt manifest/freedom-framework.pdf
-          git commit -m "chore: Auto-generate .fodt and .pdf from .odt" || echo "No changes detected"
+
+          git add *.fodt *.pdf
+          git commit -m "chore: auto-convert .odt → .fodt + .pdf" || echo "No changes"
           git push
