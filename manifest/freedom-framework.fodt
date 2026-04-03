@@ -70,7 +70,7 @@
    <config:config-item config:name="ChartAutoUpdate" config:type="boolean">true</config:config-item>
    <config:config-item config:name="PrinterSetup" config:type="base64Binary"/>
    <config:config-item config:name="AddParaTableSpacingAtStart" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="Rsid" config:type="int">3193150</config:config-item>
+   <config:config-item config:name="Rsid" config:type="int">3188309</config:config-item>
    <config:config-item config:name="EmbeddedDatabaseName" config:type="string"/>
    <config:config-item config:name="FieldAutoUpdate" config:type="boolean">true</config:config-item>
    <config:config-item config:name="OutlineLevelYieldsNumbering" config:type="boolean">false</config:config-item>
@@ -2331,7 +2331,7 @@
    <text:p text:style-name="Text_20_body">Government-subsidized housing programs, burdened by administrative costs and inefficiencies, can be phased out over the 18-year transition, reallocating funds to infrastructure. This eliminates redundant bureaucracies—e.g., waiting list management and eligibility checks—yielding fiscal savings while ensuring no one falls through gaps. The result: a hybrid system where public guarantees underpin private choice, fostering innovation in sustainable building without coercive dependencies.</text:p>
    <text:p text:style-name="Horizontal_20_Line"/>
    <text:h text:style-name="P8" text:outline-level="2"><text:bookmark-start text:name="__RefHeading___Toc1942_3246451801"/><text:bookmark text:name="footnote-label"/>Footnotes<text:bookmark-end text:name="__RefHeading___Toc1942_3246451801"/></text:h>
-   <text:list xml:id="list674817582" text:style-name="L1">
+   <text:list xml:id="list4252376687" text:style-name="L1">
     <text:list-item>
      <text:p text:style-name="P39"><text:bookmark text:name="user-content-fn-1"/>Agronomic estimates for small-scale polyculture self-sufficiency; practical permaculture models demonstrate full nutrition on 0.2–0.5 hectares in suitable climates. <text:a xlink:type="simple" xlink:href="#user-content-fnref-1" text:style-name="Internet_20_link" text:visited-style-name="Visited_20_Internet_20_Link">↩</text:a></text:p>
     </text:list-item>
@@ -2523,7 +2523,7 @@
    <text:h text:style-name="P10" text:outline-level="3"><text:bookmark-start text:name="__RefHeading___Toc1980_3246451801"/><text:soft-page-break/>2.4.9 Impacts on Pharma and Healthcare Systems<text:bookmark-end text:name="__RefHeading___Toc1980_3246451801"/></text:h>
    <text:p text:style-name="Text_20_body">Hybrid: open access with voluntary incentives.</text:p>
    <text:h text:style-name="P8" text:outline-level="2"><text:bookmark-start text:name="__RefHeading___Toc1982_3246451801"/><text:bookmark text:name="footnote-label Copy 1"/>Footnotes<text:bookmark-end text:name="__RefHeading___Toc1982_3246451801"/></text:h>
-   <text:list xml:id="list3172546899" text:style-name="L2">
+   <text:list xml:id="list2119173782" text:style-name="L2">
     <text:list-item>
      <text:p text:style-name="P40"><text:bookmark text:name="user-content-fn-1 Copy 1"/>Copyright durations per Berne Convention. <text:a xlink:type="simple" xlink:href="#user-content-fnref-1" text:style-name="Internet_20_link" text:visited-style-name="Visited_20_Internet_20_Link">↩</text:a> <text:a xlink:type="simple" xlink:href="#user-content-fnref-1-2" text:style-name="Internet_20_link" text:visited-style-name="Visited_20_Internet_20_Link">↩</text:a><text:a xlink:type="simple" xlink:href="#user-content-fnref-1-2" text:style-name="Internet_20_link" text:visited-style-name="Visited_20_Internet_20_Link"><text:span text:style-name="T5">2</text:span></text:a></text:p>
     </text:list-item>
