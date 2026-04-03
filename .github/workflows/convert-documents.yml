@@ -9,85 +9,47 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
-  generate-fodt:
-    name: Generate FODT
+  convert:
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+  - name: Checkout code
+    uses: actions/checkout@v4
+    with:
+      fetch-depth: 0
+      token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install LibreOffice
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends \
-            libreoffice \
-            libreoffice-writer
+  - name: Install LibreOffice
+    run: |
+      sudo apt-get update -qq
+      sudo apt-get install -y --no-install-recommends \
+        libreoffice \
+        libreoffice-writer
 
-      - name: Convert to FODT
-        run: |
-          cd manifest
-          libreoffice --headless --convert-to fodt freedom-framework.odt
+  - name: Convert ODT to FODT and PDF
+    run: |
+      cd manifest
+      echo "Converting freedom-framework.odt..."
+      libreoffice --headless --convert-to fodt freedom-framework.odt
+      libreoffice --headless --convert-to pdf freedom-framework.odt
+      echo "Conversion completed:"
+      ls -la
 
-      - name: Commit and Push FODT
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
-          # Reset any potential unstaged changes and pull latest
-          git reset --hard HEAD
-          git pull --ff-only origin main || git pull --rebase origin main || true
-          
-          git add manifest/freedom-framework.fodt || true
-          
-          if ! git diff --staged --quiet; then
-            git commit -m "chore: Auto-generate .fodt from .odt"
-            git push origin HEAD:main
-          else
-            echo "No changes to commit for .fodt"
-          fi
+  - name: Create Pull Request with generated files
+    uses: peter-evans/create-pull-request@v7
+    with:
+      commit-message: |-
+        chore: Auto-generate .fodt from .odt
+        chore: Auto-generate .pdf from .odt
+      title: "chore: Auto-generate .fodt and .pdf from latest ODT"
+      body: |
+        Automatically generated `.fodt` (for better diffs) and `.pdf` files 
+        from the latest `freedom-framework.odt`.
 
-  generate-pdf:
-    name: Generate PDF
-    runs-on: ubuntu-22.04
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install LibreOffice
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends \
-            libreoffice \
-            libreoffice-writer
-
-      - name: Convert to PDF
-        run: |
-          cd manifest
-          libreoffice --headless --convert-to pdf freedom-framework.odt
-
-      - name: Commit and Push PDF
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
-          git reset --hard HEAD
-          git pull --ff-only origin main || git pull --rebase origin main || true
-          
-          git add manifest/freedom-framework.pdf || true
-          
-          if ! git diff --staged --quiet; then
-            git commit -m "chore: Auto-generate .pdf from .odt"
-            git push origin HEAD:main
-          else
-            echo "No changes to commit for .pdf"
-          fi
+        This PR was created by the document conversion workflow.
+      branch: auto-generate-documents
+      delete-branch: true
+      token: ${{ secrets.GITHUB_TOKEN }}
