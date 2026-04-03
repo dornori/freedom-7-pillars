@@ -16,11 +16,21 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cache LibreOffice
+        uses: actions/cache@v4
+        with:
+          path: |
+            /var/cache/apt/archives
+            /usr/lib/libreoffice
+            /usr/share/libreoffice
+          key: ${{ runner.os }}-libreoffice-v1
+          restore-keys: ${{ runner.os }}-libreoffice-
 
       - name: Install LibreOffice
         run: |
@@ -32,22 +42,27 @@ jobs:
       - name: Convert ODT to FODT and PDF
         run: |
           cd manifest
-          echo "Converting freedom-framework.odt..."
+          echo "🔄 Converting freedom-framework.odt ..."
+          
           libreoffice --headless --convert-to fodt freedom-framework.odt
-          libreoffice --headless --convert-to pdf freedom-framework.odt
-          echo "Conversion done:"
+          libreoffice --headless --convert-to pdf  freedom-framework.odt
+          
+          echo "✅ Conversion completed:"
           ls -la
 
       - name: Create Pull Request with generated files
         uses: peter-evans/create-pull-request@v7
         with:
-          commit-message: "chore: Auto-generate .fodt and .pdf from .odt"
-          title: "chore: Auto-generate .fodt and .pdf from latest .odt"
+          commit-message: "chore: Auto-generate .fodt and .pdf from .odt [skip ci]"
+          title: "chore: Auto-generate .fodt and .pdf"
           body: |
-            Automatically generated `.fodt` and `.pdf` files from `freedom-framework.odt`.
+            Automatically generated files from the latest `freedom-framework.odt`:
+
+            - `freedom-framework.fodt` → Better for Git diffs and collaboration
+            - `freedom-framework.pdf` → Clean version for readers
 
             This PR was created by the document conversion workflow.
-          branch: auto-update-documents
+          branch: auto-generate-documents
           delete-branch: true
           token: ${{ secrets.GITHUB_TOKEN }}
           add-paths: |
