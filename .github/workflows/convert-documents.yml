@@ -11,9 +11,8 @@ permissions:
   contents: write
 
 jobs:
-  # Job 1: Generate FODT
   generate-fodt:
-    name: Generate FODT (for diffs)
+    name: Generate FODT
     runs-on: ubuntu-22.04
 
     steps:
@@ -35,25 +34,26 @@ jobs:
           cd manifest
           libreoffice --headless --convert-to fodt freedom-framework.odt
 
-      - name: Commit FODT
+      - name: Commit and Push FODT
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
-          git pull --rebase origin main || echo "No remote changes"
+          # Reset any potential unstaged changes and pull latest
+          git reset --hard HEAD
+          git pull --ff-only origin main || git pull --rebase origin main || true
           
           git add manifest/freedom-framework.fodt || true
           
           if ! git diff --staged --quiet; then
             git commit -m "chore: Auto-generate .fodt from .odt"
-            git push
+            git push origin HEAD:main
           else
             echo "No changes to commit for .fodt"
           fi
 
-  # Job 2: Generate PDF
   generate-pdf:
-    name: Generate PDF (for reading)
+    name: Generate PDF
     runs-on: ubuntu-22.04
 
     steps:
@@ -75,18 +75,19 @@ jobs:
           cd manifest
           libreoffice --headless --convert-to pdf freedom-framework.odt
 
-      - name: Commit PDF
+      - name: Commit and Push PDF
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
-          git pull --rebase origin main || echo "No remote changes"
+          git reset --hard HEAD
+          git pull --ff-only origin main || git pull --rebase origin main || true
           
           git add manifest/freedom-framework.pdf || true
           
           if ! git diff --staged --quiet; then
             git commit -m "chore: Auto-generate .pdf from .odt"
-            git push
+            git push origin HEAD:main
           else
             echo "No changes to commit for .pdf"
           fi
