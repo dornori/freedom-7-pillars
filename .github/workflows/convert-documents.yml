@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write   # Needed to create PRs
 
 jobs:
   convert:
@@ -21,18 +22,7 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Cache LibreOffice
-        uses: actions/cache@v4
-        with:
-          path: |
-            /var/cache/apt/archives
-            /usr/lib/libreoffice
-            /usr/share/libreoffice
-          key: ${{ runner.os }}-libreoffice-2026-04
-          restore-keys: |
-            ${{ runner.os }}-libreoffice-
-
-      - name: Install LibreOffice (only if not cached)
+      - name: Install LibreOffice
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends \
@@ -42,24 +32,15 @@ jobs:
       - name: Convert ODT to FODT and PDF
         run: |
           cd manifest
-          echo "Starting conversion..."
           libreoffice --headless --convert-to fodt freedom-framework.odt
           libreoffice --headless --convert-to pdf freedom-framework.odt
-          echo "Conversion completed:"
-          ls -la
 
-      - name: Commit generated files
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
-          git pull --rebase origin main || echo "No remote changes"
-          
-          git add manifest/freedom-framework.fodt manifest/freedom-framework.pdf || true
-          
-          if ! git diff --staged --quiet; then
-            git commit -m "chore: Auto-generate .fodt and .pdf from .odt [skip ci]"
-            git push
-          else
-            echo "No changes to commit"
-          fi
+      - name: Create Pull Request with generated files
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "chore: Auto-generate .fodt and .pdf from .odt"
+          title: "chore: Auto-generate .fodt and .pdf"
+          body: "Automatically generated .fodt and .pdf files from the latest freedom-framework.odt"
+          branch: "auto-generate-documents"
+          delete-branch: true
+          token: ${{ secrets.GITHUB_TOKEN }}
