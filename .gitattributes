@@ -1,2 +1,4 @@
-          *.odt binary
-          *.fodt text
+# Industry standard handling for OpenDocument files
+*.odt   binary
+*.fodt  text
+*.pdf   binar
