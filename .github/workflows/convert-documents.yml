@@ -43,6 +43,8 @@ jobs:
 
           git add *.pdf
           git commit -m "chore: auto-generate .pdf from .odt" || echo "No changes"
+
+          git pull --rebase
           git push
         continue-on-error: true
 
@@ -79,5 +81,7 @@ jobs:
 
           git add *.fodt
           git commit -m "chore: auto-generate .fodt from .odt" || echo "No changes"
+
+          git pull --rebase
           git push
         continue-on-error: true
