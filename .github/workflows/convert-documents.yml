@@ -5,42 +5,46 @@ on:
     branches: [ main ]
     paths:
       - 'manifest/freedom-framework.odt'
-
-  workflow_dispatch:   # Allows you to run it manually
+  workflow_dispatch:
 
 jobs:
   convert:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # Important for committing changes
+          fetch-depth: 0
 
       - name: Install LibreOffice
         run: |
-          sudo apt-get update
-          sudo apt-get install -y libreoffice libreoffice-writer
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            libreoffice \
+            libreoffice-writer
 
       - name: Convert ODT to FODT and PDF
         run: |
           cd manifest
-          # Convert to Flat ODF (.fodt)
+          echo "Starting conversion of freedom-framework.odt..."
+          
           libreoffice --headless --convert-to fodt freedom-framework.odt
-          # Convert to PDF
-          libreoffice --headless --convert-to pdf freedom-framework.odt
+          libreoffice --headless --convert-to pdf  freedom-framework.odt
 
-      - name: Commit generated files (if changed)
+          echo "Conversion completed. Files created:"
+          ls -la
+
+      - name: Commit generated files if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
           git add manifest/freedom-framework.fodt manifest/freedom-framework.pdf || true
           
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
+          if ! git diff --staged --quiet; then
             git commit -m "chore: Auto-generate .fodt and .pdf from .odt [skip ci]"
             git push
+          else
+            echo "No changes detected - nothing to commit"
           fi
