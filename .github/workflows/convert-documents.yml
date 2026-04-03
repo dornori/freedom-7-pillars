@@ -38,10 +38,21 @@ jobs:
       echo "Conversion completed:"
       ls -la
 
-  - name: Create Pull Request with generated files
+  - name: Commit FODT file
+    run: |
+      git config user.name "github-actions[bot]"
+      git config user.email "github-actions[bot]@users.noreply.github.com"
+      git add manifest/freedom-framework.fodt
+      git commit -m "chore: Auto-generate .fodt from .odt" || echo "No changes to commit"
+
+  - name: Commit PDF file
+    run: |
+      git add manifest/freedom-framework.pdf
+      git commit -m "chore: Auto-generate .pdf from .odt" || echo "No changes to commit"
+
+  - name: Create Pull Request
     uses: peter-evans/create-pull-request@v7
     with:
-      commit-message: "chore: Auto-generate .fodt from .odt\n\nchore: Auto-generate .pdf from .odt"
       title: "chore: Auto-generate .fodt and .pdf from latest ODT"
       body: |
         Automatically generated `.fodt` (for better diffs) and `.pdf` files 
