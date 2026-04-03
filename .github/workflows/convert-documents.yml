@@ -31,19 +31,19 @@ jobs:
       - name: Convert ODT to FODT and PDF
         run: |
           cd manifest
-          echo "Starting conversion of freedom-framework.odt..."
+          echo "Starting conversion..."
           libreoffice --headless --convert-to fodt freedom-framework.odt
           libreoffice --headless --convert-to pdf freedom-framework.odt
           echo "Conversion completed:"
           ls -la
 
-      - name: Commit generated files (with pull first)
+      - name: Commit generated files (safe rebase)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
-          # Pull latest changes first to avoid non-fast-forward error
-          git pull --rebase origin main || true
+          # Pull latest changes with rebase to avoid non-fast-forward error
+          git pull --rebase origin main || echo "No remote changes to rebase"
           
           git add manifest/freedom-framework.fodt manifest/freedom-framework.pdf || true
           
