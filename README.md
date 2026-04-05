@@ -2,7 +2,7 @@
 
 **Declaration for a Free World Order**
 
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Hippocratic License HL3-CL-ECO-LAW-MIL-SOC-SV](https://img.shields.io/static/v1?label=Hippocratic%20License&message=HL3-CL-ECO-LAW-MIL-SOC-SV&labelColor=5e2751&color=bc8c3d)](https://firstdonoharm.dev/version/3/0/cl-eco-law-mil-soc-sv.html)
 [![Latest Release](https://img.shields.io/github/v/release/dornori/freedom-7-pillars)](https://github.com/dornori/freedom-7-pillars/releases)
 
 **The FREEDOM Framework** is a collaborative, inclusive declaration for a free world order.  
