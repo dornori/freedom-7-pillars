@@ -1,4 +1,4 @@
-name: Convert Persian Translations ODT files
+name: Convert Persian ODT → FODT + PDF
 
 on:
   push:
@@ -10,5 +10,4 @@ jobs:
     uses: ./.github/workflows/_convert-odt-base.yml
     with:
       folder: 'translations/Persian'
-      # No extra fonts - just like the original script
     secrets: inherit
