@@ -1,10 +1,15 @@
-name: Convert ODT → FODT + PDF
+name: Convert ODT (Reusable)
 
 on:
-  push:
-    paths:
-      - 'manifest/*.odt'
-      - 'translations/Persian/*.odt'           # Add other folders
+  workflow_call:
+    inputs:
+      folder:
+        required: true
+        type: string
+      extra-fonts:
+        required: false
+        type: string
+        default: ''
 
 permissions:
   contents: write
@@ -13,10 +18,7 @@ jobs:
   generate-pdf:
     name: Generate PDF
     runs-on: ubuntu-22.04
-    strategy:
-      matrix:
-        folder: ['manifest', 'translations/Persian']  # List your folders here
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -30,11 +32,12 @@ jobs:
             libreoffice \
             libreoffice-writer \
             fonts-dejavu \
-            fonts-liberation
+            fonts-liberation \
+            ${{ inputs.extra-fonts }}
 
       - name: Convert to PDF + Commit
         run: |
-          cd ${{ matrix.folder }}
+          cd ${{ inputs.folder }}
           shopt -s nullglob
 
           git config user.name "github-actions[bot]"
@@ -42,12 +45,9 @@ jobs:
 
           for file in *.odt; do
             base=$(basename "$file" .odt)
-
-            # convert to PDF
             libreoffice --headless --norestore --nolockcheck \
               -env:UserInstallation=file:///tmp/lo-profile \
               --convert-to pdf "$file"
-
             git add "${base}.pdf"
             git commit -m "Human Readable: auto-generate ${base}.pdf from ${file}" || echo "No changes for ${base}.pdf"
           done
@@ -60,10 +60,7 @@ jobs:
     name: Generate FODT
     runs-on: ubuntu-22.04
     needs: generate-pdf
-    strategy:
-      matrix:
-        folder: ['manifest', 'translations/Persian']  # Same folders as above
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -79,7 +76,7 @@ jobs:
 
       - name: Convert to FODT + Commit
         run: |
-          cd ${{ matrix.folder }}
+          cd ${{ inputs.folder }}
           shopt -s nullglob
 
           git config user.name "github-actions[bot]"
@@ -87,12 +84,9 @@ jobs:
 
           for file in *.odt; do
             base=$(basename "$file" .odt)
-
-            # convert to FODT
             libreoffice --headless --norestore --nolockcheck \
               -env:UserInstallation=file:///tmp/lo-profile \
               --convert-to fodt "$file"
-
             git add "${base}.fodt"
             git commit -m "Machine Readable: auto-generate ${base}.fodt from ${file}" || echo "No changes for ${base}.fodt"
           done
