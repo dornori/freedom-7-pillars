@@ -1,4 +1,4 @@
-name: Convert Manifest ODT files
+name: Convert Manifest ODT → FODT + PDF
 
 on:
   push:
