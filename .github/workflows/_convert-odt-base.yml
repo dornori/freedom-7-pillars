@@ -1,4 +1,15 @@
-name: [BASE] Convert ODT to PDF + FODT
+#!/usr/bin/env yaml
+# ============================================================
+# 🚫 BASE WORKFLOW - DO NOT EDIT UNLESS YOU KNOW WHAT YOU'RE DOING
+# 
+# This is a parent template used by folder-specific workflows.
+# Changes here affect ALL folders that use this converter.
+#
+# To add a new folder, create a new child workflow that calls this one.
+# See convert-manifest.yml or convert-persian.yml for examples.
+# ============================================================
+
+name: 🔄 [BASE] ODT Converter (PDF + FODT)
 
 on:
   workflow_call:
@@ -6,12 +17,14 @@ on:
       folder:
         required: true
         type: string
-        description: 'Folder path containing ODT files'
+        description: 'Target folder containing .odt files'
+        example: 'manifest'
       extra-fonts:
         required: false
         type: string
         default: ''
-        description: 'Additional fonts to install (space-separated)'
+        description: 'Additional fonts to install (space-separated apt package names)'
+        example: 'fonts-farsiweb fonts-irannastaliq'
 
 permissions:
   contents: write
@@ -20,4 +33,85 @@ jobs:
   generate-pdf:
     name: Generate PDF
     runs-on: ubuntu-22.04
-    # ... rest of the workflow
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install LibreOffice + Fonts
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            libreoffice \
+            libreoffice-writer \
+            fonts-dejavu \
+            fonts-liberation \
+            ${{ inputs.extra-fonts }}
+
+      - name: Convert to PDF + Commit
+        run: |
+          cd ${{ inputs.folder }}
+          shopt -s nullglob
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          for file in *.odt; do
+            base=$(basename "$file" .odt)
+
+            echo "Converting $file to PDF..."
+            libreoffice --headless --norestore --nolockcheck \
+              -env:UserInstallation=file:///tmp/lo-profile \
+              --convert-to pdf "$file"
+
+            git add "${base}.pdf"
+            git commit -m "Human Readable: auto-generate ${base}.pdf from ${file}" || echo "No changes for ${base}.pdf"
+          done
+
+          git pull --rebase
+          git push
+        continue-on-error: true
+
+  generate-fodt:
+    name: Generate FODT
+    runs-on: ubuntu-22.04
+    needs: generate-pdf
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install LibreOffice
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            libreoffice \
+            libreoffice-writer
+
+      - name: Convert to FODT + Commit
+        run: |
+          cd ${{ inputs.folder }}
+          shopt -s nullglob
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          for file in *.odt; do
+            base=$(basename "$file" .odt)
+
+            echo "Converting $file to FODT..."
+            libreoffice --headless --norestore --nolockcheck \
+              -env:UserInstallation=file:///tmp/lo-profile \
+              --convert-to fodt "$file"
+
+            git add "${base}.fodt"
+            git commit -m "Machine Readable: auto-generate ${base}.fodt from ${file}" || echo "No changes for ${base}.fodt"
+          done
+
+          git pull --rebase
+          git push
+        continue-on-error: true
