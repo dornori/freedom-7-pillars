@@ -70,7 +70,7 @@
    <config:config-item config:name="ChartAutoUpdate" config:type="boolean">true</config:config-item>
    <config:config-item config:name="PrinterSetup" config:type="base64Binary"/>
    <config:config-item config:name="AddParaTableSpacingAtStart" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="Rsid" config:type="int">529226</config:config-item>
+   <config:config-item config:name="Rsid" config:type="int">478380</config:config-item>
    <config:config-item config:name="EmbeddedDatabaseName" config:type="string"/>
    <config:config-item config:name="FieldAutoUpdate" config:type="boolean">true</config:config-item>
    <config:config-item config:name="OutlineLevelYieldsNumbering" config:type="boolean">false</config:config-item>
@@ -2084,7 +2084,7 @@
    <text:p text:style-name="Text_20_body">Government-subsidized housing programs, burdened by administrative costs and inefficiencies, can be phased out over the 18-year transition, reallocating funds to infrastructure. This eliminates redundant bureaucracies—e.g., waiting list management and eligibility checks—yielding fiscal savings while ensuring no one falls through gaps. The result: a hybrid system where public guarantees underpin private choice, fostering innovation in sustainable building without coercive dependencies.</text:p>
    <text:p text:style-name="Horizontal_20_Line"/>
    <text:h text:style-name="P7" text:outline-level="2"><text:bookmark-start text:name="__RefHeading___Toc1942_3246451801"/><text:bookmark text:name="footnote-label"/>Footnotes<text:bookmark-end text:name="__RefHeading___Toc1942_3246451801"/></text:h>
-   <text:list xml:id="list3884363083" text:style-name="WWNum8">
+   <text:list xml:id="list670629427" text:style-name="WWNum8">
     <text:list-item>
      <text:p text:style-name="P39"><text:bookmark text:name="user-content-fn-1"/>Agronomic estimates for small-scale polyculture self-sufficiency; practical permaculture models demonstrate full nutrition on 0.2–0.5 hectares in suitable climates. <text:a xlink:type="simple" xlink:href="#user-content-fnref-1" text:style-name="Internet_20_link" text:visited-style-name="Visited_20_Internet_20_Link"><text:span text:style-name="Internet_20_link">↩</text:span></text:a></text:p>
     </text:list-item>
@@ -2348,7 +2348,7 @@
    <text:p text:style-name="Text_20_body"><text:span text:style-name="Strong_20_Emphasis"><text:span text:style-name="T16">[^28]</text:span></text:span><text:span text:style-name="T16"> OECD case studies: South Korea and Sweden broadband initiatives.</text:span></text:p>
    <text:p text:style-name="Text_20_body"><text:span text:style-name="Strong_20_Emphasis"><text:span text:style-name="T16">[^29]</text:span></text:span><text:span text:style-name="T16"> Transition from AOL/CompuServe to the open web (1990s analyses).</text:span></text:p>
    <text:p text:style-name="Text_20_body"><text:span text:style-name="Strong_20_Emphasis"><text:span text:style-name="T16">[^30]</text:span></text:span><text:span text:style-name="T16"> UN Human Rights treaties:</text:span></text:p>
-   <text:list xml:id="list3571159647" text:style-name="WWNum9">
+   <text:list xml:id="list3482429973" text:style-name="WWNum9">
     <text:list-item>
      <text:p text:style-name="P44"><text:soft-page-break/>Universal Declaration of Human Rights </text:p>
     </text:list-item>
@@ -2376,7 +2376,7 @@
    <text:p text:style-name="P16">Current medical billing systems in market-driven economies represent one of the most inefficient and harmful administrative arrangements in modern society. In the United States alone, the annual cost of medical billing administration exceeds $800 billion, representing approximately 25 to 30 percent of total healthcare spending. This figure includes: hospital billing departments, insurance company claims processing, prior authorization staff, denial management and appeals, coding and documentation compliance, and patient billing and collections.</text:p>
    <text:p text:style-name="P16">To understand how the Equilibrium pillar would absorb these costs, it is necessary to examine where the money currently goes and how redirection would function.</text:p>
    <text:p text:style-name="P16"><text:span text:style-name="Strong_20_Emphasis">Current Cost Breakdown (per $1 of healthcare delivery in a multi-payer system):</text:span></text:p>
-   <text:list xml:id="list857534379" text:style-name="WWNum10">
+   <text:list xml:id="list2295969972" text:style-name="WWNum10">
     <text:list-item>
      <text:p text:style-name="P40"><text:soft-page-break/>Direct clinical care: $0.45 to $0.55</text:p>
     </text:list-item>
@@ -2414,7 +2414,7 @@
    <text:p text:style-name="P16"><text:span text:style-name="Strong_20_Emphasis">Channel Four: Negotiated Price Normalization.</text:span> In fragmented systems, prices for identical procedures vary by factors of 5 to 20 depending on insurer negotiating power. A knee MRI costing $400 at one facility under one insurance plan may cost $1,200 at the same facility under a different plan, or $2,500 at a different facility under the same plan. Equilibrium establishes a single published reimbursement rate for every procedure, determined through transparent cost-accounting plus a fixed margin. This eliminates price variation waste, reducing total spending by an estimated 10 to 15 percent without reducing access or quality.</text:p>
    <text:p text:style-name="P16"><text:span text:style-name="Strong_20_Emphasis">Channel Five: Debt Forgiveness as Transition Mechanism.</text:span> Existing medical debt — approximately $200 billion in the United States alone — is not collected by the new system. It is forgiven through a one-time appropriation funded by redirecting the first year&apos;s administrative savings. Creditors are compensated at pennies on the dollar (the actual recovery value of medical debt, which is typically 5 to 20 cents on the dollar in secondary markets). Individuals are released from payment obligations. Future care generates no debt because there are no patient bills.</text:p>
    <text:p text:style-name="P16"><text:span text:style-name="Strong_20_Emphasis">The Resulting Cost Structure (per $1 of healthcare delivery under Equilibrium):</text:span></text:p>
-   <text:list xml:id="list2581349887" text:style-name="WWNum11">
+   <text:list xml:id="list2420972933" text:style-name="WWNum11">
     <text:list-item>
      <text:p text:style-name="P41">Direct clinical care: $0.70 to $0.80 (increase due to previously uncompensated care now being paid)</text:p>
     </text:list-item>
@@ -2448,7 +2448,7 @@
    <text:p text:style-name="P16">AI models trained on historical toxicology data can predict with increasing accuracy whether a candidate molecule will cause liver toxicity, cardiac arrhythmias, or other safety concerns. Organ-on-a-chip systems combined with AI analysis reduce animal testing requirements while improving human relevance. The combination of in silico prediction and high-content in vitro screening collapses the preclinical timeline by an order of magnitude.</text:p>
    <text:p text:style-name="P16"><text:span text:style-name="Strong_20_Emphasis">Phase Four: Clinical Trial Optimization (Current: 6-10 years; AI-Accelerated: 2-4 years)</text:span></text:p>
    <text:p text:style-name="P16">Clinical trials are currently the longest and most expensive phase of drug development. AI optimization attacks every bottleneck:</text:p>
-   <text:list xml:id="list62941376" text:style-name="WWNum12">
+   <text:list xml:id="list3260234459" text:style-name="WWNum12">
     <text:list-item>
      <text:p text:style-name="P42"><text:span text:style-name="Strong_20_Emphasis">Patient recruitment:</text:span> AI scans electronic health records to identify eligible patients, reducing recruitment timelines from months to days.</text:p>
     </text:list-item>
@@ -2514,7 +2514,7 @@
    <text:p text:style-name="P16">Private healthcare providers continue to operate, receiving public reimbursement at negotiated rates. Luxury and elective services (cosmetic surgery, premium private rooms, experimental treatments not yet proven effective) remain private-pay markets. The result is a hybrid system: universal public guarantees for essential care, voluntary private supplementation for non-essential or premium services. This model has proven durable in France, Germany, Japan, and other advanced economies.</text:p>
    <text:p text:style-name="P16">For pharmaceutical companies, the transition requires adaptation but not extinction. The market for drugs will expand dramatically as universal coverage makes medications affordable to populations currently priced out. Volume increases will partially offset price reductions. Companies that focus on genuine innovation—novel mechanisms, first-in-class therapies, hard-to-treat diseases—will thrive. Companies whose business model depends on patent evergreening, aggressive marketing, and price gouging will not. This is not destruction of an industry but its long-overdue realignment with its stated purpose: improving human health.</text:p>
    <text:h text:style-name="P13" text:outline-level="2"><text:bookmark-start text:name="__RefHeading___Toc8867_995564575"/>Footnotes<text:bookmark-end text:name="__RefHeading___Toc8867_995564575"/></text:h>
-   <text:list xml:id="list3144082029" text:style-name="WWNum13">
+   <text:list xml:id="list833275227" text:style-name="WWNum13">
     <text:list-item>
      <text:p text:style-name="P43">Copyright durations per Berne Convention and patent term analyses.</text:p>
     </text:list-item>
