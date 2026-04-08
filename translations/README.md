@@ -1,4 +1,4 @@
-# 📚 Translations Directory
+# 🌐 Translations Directory
 
 ## ⚠️ IMPORTANT: DO NOT EDIT FILES IN THIS FOLDER DIRECTLY
 
@@ -6,8 +6,8 @@ This directory contains **auto-generated translations** from the master English 
 
 ### 📌 Source of Truth
 
-- **Master Documents:** Located in the `/manifest` folder (English only)
-- **This Folder:** Contains machine-generated translations
+- **Master Documents:** Located in `/manifest` folder (English only)
+- **This Folder:** Contains machine-generated translations for all languages
 
 ### 🔄 How It Works
 
@@ -19,11 +19,10 @@ This directory contains **auto-generated translations** from the master English 
 
 ### 📁 Structure
 translations/
-├── Persian/ # فارسی - Persian translations
-├── Spanish/ # Español - Spanish translations
-├── French/ # Français - French translations
+├── Language1/ # Translations for Language 1
+├── Language2/ # Translations for Language 2
+├── Language3/ # Translations for Language 3
 └── README.md # This file
-
 
 ### 🚫 What NOT to Do
 
@@ -40,17 +39,16 @@ translations/
 ### 🤖 Automatic Workflow
 
 When you push changes to `/manifest/*.odt`:
-1. Workflow `convert-manifest.yml` triggers
-2. Converts English ODT → PDF + FODT
-3. Workflow `convert-persian.yml` triggers
-4. Updates Persian translations automatically
+1. Workflow converts English ODT → PDF + FODT
+2. Workflow triggers translations for all language folders
+3. All translation files update automatically
 
-### 📝 Requesting New Translations
+### 📝 Requesting New Languages
 
 To add a new language:
 1. Create a GitHub issue with the language request
 2. The team will add the language to the workflow
-3. **DO NOT** manually create translation folders
+3. **DO NOT** manually create language folders
 
 ### 🔍 Viewing Translations
 
@@ -64,3 +62,4 @@ Contact the documentation team - do not edit files directly!
 ---
 
 **Remember:** This folder is automatically managed. Your edits will be overwritten!
+
