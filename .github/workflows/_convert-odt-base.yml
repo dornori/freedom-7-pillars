@@ -8,8 +8,7 @@
 # To add a new folder, create a new child workflow that calls this one.
 # See convert-manifest.yml or convert-persian.yml for examples.
 # ============================================================
-
-name: 🔄 [BASE] ODT Converter (PDF + FODT)
+name: Convert ODT → FODT + PDF
 
 on:
   workflow_call:
@@ -17,12 +16,6 @@ on:
       folder:
         required: true
         type: string
-        description: 'Target folder containing .odt files'
-      extra-fonts:
-        required: false
-        type: string
-        default: ''
-        description: 'Additional fonts to install (space-separated apt package names)'
 
 permissions:
   contents: write
@@ -45,8 +38,7 @@ jobs:
             libreoffice \
             libreoffice-writer \
             fonts-dejavu \
-            fonts-liberation \
-            ${{ inputs.extra-fonts }}
+            fonts-liberation
 
       - name: Convert to PDF + Commit
         run: |
@@ -54,12 +46,12 @@ jobs:
           shopt -s nullglob
 
           git config user.name "github-actions[bot]"
-          git config.user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           for file in *.odt; do
             base=$(basename "$file" .odt)
 
-            echo "Converting $file to PDF..."
+            # convert to PDF
             libreoffice --headless --norestore --nolockcheck \
               -env:UserInstallation=file:///tmp/lo-profile \
               --convert-to pdf "$file"
@@ -96,12 +88,12 @@ jobs:
           shopt -s nullglob
 
           git config user.name "github-actions[bot]"
-          git config.user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           for file in *.odt; do
             base=$(basename "$file" .odt)
 
-            echo "Converting $file to FODT..."
+            # convert to FODT
             libreoffice --headless --norestore --nolockcheck \
               -env:UserInstallation=file:///tmp/lo-profile \
               --convert-to fodt "$file"
