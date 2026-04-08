@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'manifest/*.odt'
+      - 'translations/Persian/*.odt'           # Add other folders
 
 permissions:
   contents: write
@@ -12,7 +13,10 @@ jobs:
   generate-pdf:
     name: Generate PDF
     runs-on: ubuntu-22.04
-
+    strategy:
+      matrix:
+        folder: ['manifest', 'translations/Persian']  # List your folders here
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -30,7 +34,7 @@ jobs:
 
       - name: Convert to PDF + Commit
         run: |
-          cd manifest
+          cd ${{ matrix.folder }}
           shopt -s nullglob
 
           git config user.name "github-actions[bot]"
@@ -56,7 +60,10 @@ jobs:
     name: Generate FODT
     runs-on: ubuntu-22.04
     needs: generate-pdf
-
+    strategy:
+      matrix:
+        folder: ['manifest', 'translations/Persian']  # Same folders as above
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -72,7 +79,7 @@ jobs:
 
       - name: Convert to FODT + Commit
         run: |
-          cd manifest
+          cd ${{ matrix.folder }}
           shopt -s nullglob
 
           git config user.name "github-actions[bot]"
