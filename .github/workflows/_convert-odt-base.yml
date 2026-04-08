@@ -1,0 +1,23 @@
+name: [BASE] Convert ODT to PDF + FODT
+
+on:
+  workflow_call:
+    inputs:
+      folder:
+        required: true
+        type: string
+        description: 'Folder path containing ODT files'
+      extra-fonts:
+        required: false
+        type: string
+        default: ''
+        description: 'Additional fonts to install (space-separated)'
+
+permissions:
+  contents: write
+
+jobs:
+  generate-pdf:
+    name: Generate PDF
+    runs-on: ubuntu-22.04
+    # ... rest of the workflow
