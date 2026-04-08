@@ -1,0 +1,14 @@
+name: Convert Persian Translations ODT files
+
+on:
+  push:
+    paths:
+      - 'translations/Persian/*.odt'
+
+jobs:
+  convert:
+    uses: ./.github/workflows/_convert-odt-base.yml
+    with:
+      folder: 'translations/Persian'
+      extra-fonts: 'fonts-farsiweb fonts-irannastaliq'
+    secrets: inherit
