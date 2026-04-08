@@ -7,7 +7,7 @@ on:
 
 jobs:
   convert:
-    uses: ./.github/workflows/convert-odt-reusable.yml
+    uses: ./.github/workflows/_convert-odt-base.yml
     with:
       folder: 'manifest'
     secrets: inherit
