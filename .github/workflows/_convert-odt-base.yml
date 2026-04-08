@@ -1,13 +1,3 @@
-#!/usr/bin/env yaml
-# ============================================================
-# 🚫 BASE WORKFLOW - DO NOT EDIT UNLESS YOU KNOW WHAT YOU'RE DOING
-# 
-# This is a parent template used by folder-specific workflows.
-# Changes here affect ALL folders that use this converter.
-#
-# To add a new folder, create a new child workflow that calls this one.
-# See convert-manifest.yml or convert-persian.yml for examples.
-# ============================================================
 name: Convert ODT → FODT + PDF
 
 on:
