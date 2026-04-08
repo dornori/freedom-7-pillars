@@ -1,0 +1,13 @@
+name: Convert Manifest ODT files
+
+on:
+  push:
+    paths:
+      - 'manifest/*.odt'
+
+jobs:
+  convert:
+    uses: ./.github/workflows/convert-odt-reusable.yml
+    with:
+      folder: 'manifest'
+    secrets: inherit
