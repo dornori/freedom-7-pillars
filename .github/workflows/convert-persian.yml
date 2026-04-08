@@ -10,5 +10,5 @@ jobs:
     uses: ./.github/workflows/_convert-odt-base.yml
     with:
       folder: 'translations/Persian'
-      extra-fonts: 'fonts-farsiweb fonts-irannastaliq'
+      # No extra fonts - just like the original script
     secrets: inherit
