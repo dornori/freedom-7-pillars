@@ -9,5 +9,5 @@ jobs:
   convert:
     uses: ./.github/workflows/_convert-odt-base.yml
     with:
-      folder: 'translations/Persian'
+      folder: 'translations/Dutch'
     secrets: inherit
